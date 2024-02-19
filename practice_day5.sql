@@ -6,8 +6,8 @@ where ID%2 =0
 select count(CITY) - count(distinct CITY)
 from STATION
 ---bai 3
-
----bai 4 (ko chac)
+em khong biet lam a
+---bai 4 
 SELECT sum(item_count*order_occurrences)/sum(order_occurrences) as mean_num_of_items_per_order
 FROM items_per_order
 ---bai 5
@@ -16,7 +16,7 @@ FROM candidates
 where skill in ('Python', 'Tableau', 'PostgreSQL')
 group by candidate_id
 having count(skill) = 3
---- bai 6 (ko chac)
+--- bai 6 
 select user_id,
 count(post_id) as num_of_posts,
 max(date(post_date))-min(date(post_date)) as num_of_days
