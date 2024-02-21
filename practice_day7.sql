@@ -33,7 +33,12 @@ select tweet_id
 from Tweets
 where length(content) >15
 --- bai 7
-
+select activity_date as day, 
+count( distinct user_id) as active_users
+from Activity
+where  activity_type in ('open_session', 'end_session', 'scroll_down', 'send_message')
+and activity_date > '2019-06-28'
+group by activity_date
 --- bai 8
 select count(id)
 from employees
@@ -43,3 +48,6 @@ select position('a' in first_name)
 from worker
 where first_name = 'Amitah'
 --- bai10 
+select substring(title, length(winery)+2,4)
+from winemag_p2
+where country ='Macedonia'
