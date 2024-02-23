@@ -17,6 +17,10 @@ case
 end as triangle
 from Triangle
 ---bai 3
+select round(count(case_id)*100/count(*),1) as uncategorised_call
+from callers
+where call_category = 'n/a'
+or call_category IS NULL
 ---bai 4
 select name from Customer
 where referee_id <> 2 OR referee_id is NULL
