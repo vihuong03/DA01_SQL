@@ -5,7 +5,7 @@ from CITY as a
 join COUNTRY as b
 on a.COUNTRYCODE=b.CODE
 group by b.CONTINENT
----bai 2 (THAC MAC CHO WHERE)
+---bai 2 
 SELECT round(1.0*count(b.email_id)/count(distinct a.email_id),2) as activation_rate
 FROM emails as a  
 left join texts as b 
