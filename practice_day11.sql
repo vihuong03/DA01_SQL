@@ -21,3 +21,27 @@ on a.user_id=b.user_id
 where a.activity_type in ('open','send')
 group by b.age_bucket
 --- bai 4
+SELECT distinct customer_id
+FROM customer_contracts as a  
+inner join products as b  
+on a.product_id=b.product_id
+where product_category in ('Analytics','Containers','Compute')
+group by customer_id
+having count(distinct product_category)=3
+---bai 5
+  
+---bai 6
+select a.product_name,
+sum(b.unit) as unit
+from Products as a
+join Orders as b
+on a.product_id=b.product_id
+where extract(month from b.order_date)='02' and extract(year from b.order_date)='2020'
+group by a.product_name
+having sum(b.unit) >=100
+---bai 7
+SELECT a.page_id
+FROM pages as a  
+left join page_likes as b  
+on a.page_id=b.page_id
+where liked_date is null
