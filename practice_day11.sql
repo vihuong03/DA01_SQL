@@ -29,7 +29,14 @@ where product_category in ('Analytics','Containers','Compute')
 group by customer_id
 having count(distinct product_category)=3
 ---bai 5
-  
+select mng.employee_id, mng.name as name,
+count(emp.employee_id) as reports_count,
+round(avg(emp.age)) as average_age
+from Employees as emp
+left join Employees as mng
+on emp.reports_to=mng.employee_id
+group by 1
+having count(emp.reports_to)>0
 ---bai 6
 select a.product_name,
 sum(b.unit) as unit
