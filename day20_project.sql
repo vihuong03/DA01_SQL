@@ -66,3 +66,42 @@ SELECT
   tag
 FROM
   youngestnoldest;
+---yc 4
+WITH cte AS (
+SELECT
+  FORMAT_DATE('%Y-%m', created_at) as order_date,
+  a.product_id,
+  b.name AS product_name,
+  SUM(a.sale_price) AS total_sales,
+  SUM(b.cost) AS total_cost,
+  SUM(a.sale_price - b.cost) AS total_profit,
+  DENSE_RANK() OVER (PARTITION BY FORMAT_DATE('%Y-%m', created_at) ORDER BY SUM(a.sale_price - b.cost) DESC) AS rank_per_month
+FROM
+  bigquery-public-data.thelook_ecommerce.order_items as a
+JOIN
+  bigquery-public-data.thelook_ecommerce.products as b ON a.product_id = b.id
+GROUP BY
+  1, 2, 3, created_at
+)
+
+SELECT
+order_date AS month_year,
+product_id,
+product_name,
+total_sales,
+total_cost,
+total_profit,
+rank_per_month
+FROM
+cte
+WHERE
+rank_per_month <= 5;
+---yc5
+select FORMAT_DATE('%Y-%m-%d', created_at) as order_date,
+b.category as product_category,
+sum(a.sale_price) as revenue
+from bigquery-public-data.thelook_ecommerce.order_items as a
+join bigquery-public-data.thelook_ecommerce.products as b on a.product_id=b.id
+where FORMAT_DATE('%Y-%m-%d', created_at) between '2022-01-15' and '2022-04-15'
+group by FORMAT_DATE('%Y-%m-%d', created_at),b.category
+order by 1 desc,2
